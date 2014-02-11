@@ -80,6 +80,20 @@ class ProfilePolicy < Minican::Policy
 end
 ```
 
+### Using policies inside of policies
+Sometimes you need to call one policy from inside of another. Minican makes that simple with the `policy_for` method. `policy_for` takes an object and returns a new instance of the policy for that class.
+
+Imagine we have a blog post where users can only comment if they have read access to the post.
+
+```ruby
+class CommentPolicy < Minican::Policy
+  def can_create?(user)
+    policy = policy_for(@comment.post)
+    policy.can? :read, user
+  end
+end
+```
+
 ## Questions?
 If you have questions or think some clarification should be added to the readme feel free to open a [Github Issue](https://github.com/BlakeWilliams/Minican/issues).
 

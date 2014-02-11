@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency "activesupport", ">= 3.0.0"
 
   s.add_development_dependency "rake"
+  s.add_development_dependency "appraisal", "~> 1.0.0.beta2"
   s.add_development_dependency "rspec", "~> 3.0.0.beta1"
   s.add_development_dependency "yard", "~> 0.8.7.3"
 end

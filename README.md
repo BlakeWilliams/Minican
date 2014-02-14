@@ -15,9 +15,8 @@ gem 'minican'
 ## Usage
 
 ### Define a policy
-A policy is an object in the `app/policies` directory that inherits from Minican::Policy. This gives the object an initializer
-that takes the object the policy will authorize. The policy name has to be named after the class it
-will authorize. You can access the object in your class by `object` or the instance variable named after
+A policy is a class in the `app/policies` directory that inherits from Minican::Policy. This gives the object an initializer
+that takes the object the policy will authorize. You can access the object in your class by `object` or the instance variable named after
 the policy class. 
 
 eg: You have a `GuestUser`. You could access the instance of `GuestUser` by `object` or `@guest_user`.
@@ -35,7 +34,7 @@ end
 Minican assumes the following about your policy classes:
 
 * The class inherits from `Minican::Policy`
-* The is class named after the class to test with "Policy" appended.
+* The class is named after the class to test with "Policy" appended.
 * All methods that test authorization must be predicate methods
 * All methods that are called with `can?` accept a user argument
 
@@ -60,7 +59,7 @@ rescue_from Minican::AccessDenied do |exception|
 end
 ```
 
-Minican also provides `can?` and `cannot?` helpers that are accessible in the controller and view. They take the same arguments as `authorize!`
+Minican also provides `can?` and `cannot?` helpers that are accessible in controllers and views. They take the same arguments as `authorize!`
 
 
 ```erb
@@ -70,13 +69,27 @@ Minican also provides `can?` and `cannot?` helpers that are accessible in the co
 ```
 
 ### Using classes instead of instances
-Minican was designed for this use case and checks if the object passed to your policy is an object and uses the same policy class as if you passed it an instance. That means you
-can do things like `authorize :can_create, Profile` where `@profile` in your policy would be your `Profile` class.
+Minican was designed for this use case and checks if the object passed to your policy is an object or an instance. If it's a class it uses the same policy class as if you passed it an instance. That means you
+can do things like `authorize! :can_create, Profile` where `@profile` in your policy would be your `Profile` class.
 
 ```ruby
 class ProfilePolicy < Minican::Policy
   def can_create?(user)
     user.profile.nil?
+  end
+end
+```
+
+### Using policies inside of policies
+Sometimes you need to call one policy from inside of another. Minican makes that simple with the `policy_for` method. `policy_for` takes an object and returns a new instance of the policy for that class.
+
+Imagine we have a blog post where users can only comment if they have read access to the post.
+
+```ruby
+class CommentPolicy < Minican::Policy
+  def can_create?(user)
+    policy = policy_for(@comment.post)
+    policy.can? :read, user
   end
 end
 ```

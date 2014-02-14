@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    minican (0.0.1)
+    minican (0.0.2)
       activesupport (>= 3.0.0)
 
 GEM

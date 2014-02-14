@@ -1,7 +1,6 @@
 module Minican
   class AccessDenied < StandardError
-
-    # This is raised when a policy fails in a controller via 
+    # This is raised when a policy fails in a controller via
     # {Minican::ControllerAdditions}
     #
     # @param [policy] The policy that authorized it
@@ -11,7 +10,7 @@ module Minican
 
     # Human readable error message
     def to_s
-      "You are not authorized to access this page"
+      'You are not authorized to access this page'
     end
   end
 end

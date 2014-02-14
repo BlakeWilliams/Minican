@@ -48,7 +48,7 @@ describe Minican::ControllerAdditions do
       boolean
     end
   end
-  
+
   def define_controller
     controller = FakeController.new 
   end

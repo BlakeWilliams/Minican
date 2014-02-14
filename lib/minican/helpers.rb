@@ -1,6 +1,5 @@
 module Minican
   module Helpers
-
     private
 
     # Returns a new policy for passed in object
@@ -13,8 +12,8 @@ module Minican
     end
 
     # Returns a policy class based on the object
-    # passed in. If object is a class, it will 
-    # return itself, if it's an instance it will 
+    # passed in. If object is a class, it will
+    # return itself, if it's an instance it will
     # return a class based on its name.
     #
     # @param [object] The object to classify

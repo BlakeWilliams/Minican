@@ -19,7 +19,7 @@ module Minican
     #
     # @return [Boolean]
     def can?(method, user)
-      self.send("#{method}?", user)
+      send("#{method}?", user)
     end
 
     # Convenience method to call predicate method
